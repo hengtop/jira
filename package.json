@@ -43,7 +43,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-config-prettier": "^8.5.0",
     "husky": "^8.0.0",
     "husky-init": "^8.0.0",
     "lint-staged": "^12.4.1",
@@ -52,7 +52,7 @@
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "prettier --write .",
-      " lint",
+      "eslint --fix './src/*'",
       "git add ."
     ]
   }
