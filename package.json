@@ -50,7 +50,7 @@
     "prettier": "2.6.2"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "src/**/*.{tsx,ts}": [
       "prettier --write .",
       "eslint --fix './src/*'",
       "git add ."
