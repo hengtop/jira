@@ -6,11 +6,15 @@ interface ProjectType {
   name: string;
   personId: number;
 }
+interface ListPropsType {
+  users: UserType[];
+  list: ProjectType[];
+}
 
 export default function List({
   users,
   list,
-}: PropsWithChildren<{ users: UserType[]; list: ProjectType[] }>) {
+}: PropsWithChildren<ListPropsType>) {
   return (
     <table>
       <thead>

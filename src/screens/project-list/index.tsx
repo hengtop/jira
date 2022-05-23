@@ -25,7 +25,9 @@ export const Index = () => {
   // 这里的防抖和一般的防抖思路不一样，我们是控制参数的更新来达到防抖的效果
   useEffect(() => {
     fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debounceParams))}`,
+      `${apiUrl}/projects?${qs.stringify(
+        cleanObject(debounceParams as object),
+      )}`,
     ).then(async (response) => {
       if (response.ok) {
         setList(await response.json());

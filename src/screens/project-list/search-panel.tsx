@@ -3,7 +3,10 @@ import { UserType } from "./index";
 
 interface SearchPanelType {
   users: UserType[];
-  param: any;
+  param: {
+    name: string;
+    personId: number | string;
+  };
   setParam: (param: any) => void;
 }
 
