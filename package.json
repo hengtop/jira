@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "commit": "cz",
-    "mock:json": "json-server --watch __json_server_mock__/db.json"
+    "mock:json": "json-server --watch __json_server_mock__/db.json --middlewares __json_server_mock__/middleware.js"
   },
   "eslintConfig": {
     "extends": [

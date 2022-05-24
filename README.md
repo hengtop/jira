@@ -9,17 +9,32 @@ yarn add --dev --exact prettier
 echo {}> .prettierrc
 ```
 
+使用 react-app 创建的 ts 模板自带 eslint，但是和 prettier 使用的时候需要额外的一个插件保证不冲突，
+[参考链接](https://prettier.io/docs/en/install.html#eslint-and-other-linters)
+同时再 package.json 中添加配置：
+
+```json
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+  +   "prettier"
+    ]
+  },
+```
+
 2. 添加自动化执行命令 lint-staged and husky
 
+   使得我们可以再提交前自动格式化和修复代码。
+
 ```shell
-yarn add lint-staged -D
+npx mrm lint-staged
 ```
 
 3. 添加 commitlint
+   规范 commit 的提交内容
 
-```shell
-
-```
+   参照链接[commitlint](https://github.com/conventional-changelog/commitlint)
 
 ## 项目规范
 

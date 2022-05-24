@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import qs from "qs";
 import { cleanObject } from "utls";
 import { useMount, useDebounce } from "hooks";
@@ -35,13 +35,15 @@ export const Index = () => {
     });
   }, [debounceParams]);
 
-  useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
-  });
+  useMount(
+    useCallback(() => {
+      fetch(`${apiUrl}/users`).then(async (response) => {
+        if (response.ok) {
+          setUsers(await response.json());
+        }
+      });
+    }, []),
+  );
 
   return (
     <div>
