@@ -40,7 +40,8 @@ npx mrm lint-staged
 
 ## 项目开发策略
 
-全局的一些方法或者状态长是哟个 context 来进行使用，以往我是 redux 一把梭
+状态管理: 全局的一些方法或者状态尝试 context 来进行使用，以往我是 redux 一把梭
+样式: 使用 antd 和 emotion 进行搭配使用
 
 # 如何启动
 

@@ -46,7 +46,11 @@ export const http = async (
 // 自动添加token
 export const useHttp = () => {
   const { user } = useAuth();
-  // 使用了一个ts的操作符，获取函数的参数类型数组
+  // 使用了一个ts的操作符，获取函数的参数并以tuple类型传出
+  /* 
+    还有一个注意事项就是ts中的typeof时在静态环境运行生效
+    js中的typeof是在运行时运行生效
+  */
   return (...[url, config]: Parameters<typeof http>) =>
     http(url, { ...config, token: user?.token });
 };

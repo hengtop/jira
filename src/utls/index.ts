@@ -6,7 +6,6 @@ export const cleanObject = (object: object) => {
     // @ts-ignore
     const value = object[key];
     if (value === undefined || value === null || value === "") {
-      console.log(value);
       // @ts-ignore
       delete result[key];
     }

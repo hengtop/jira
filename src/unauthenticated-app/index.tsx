@@ -1,10 +1,14 @@
 import { LoginScreen } from "screens/login";
+import { Container, ShadowCard, Header, Background } from "./style";
 
 export default function Index() {
   return (
-    <div className="App">
-      hello jira~~~
-      <LoginScreen />
-    </div>
+    <Container>
+      <Header />
+      <Background />
+      <ShadowCard>
+        <LoginScreen />
+      </ShadowCard>
+    </Container>
   );
 }

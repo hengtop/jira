@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { cleanObject } from "utls";
 import { useMount, useDebounce } from "hooks";
 import { useHttp } from "network";
-import { useAuth } from "context/auth";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
@@ -31,7 +30,7 @@ export const Index = () => {
     client("/projects", {
       params: cleanObject(debounceParams),
     }).then(setList);
-    // 这里注意不能将client添加到依赖数组中，否则会导致无限刷新
+    // 这里注意不能将client添加到依赖数组中，否则会导致刷新
   }, [debounceParams]);
 
   useMount(

@@ -5,6 +5,10 @@ import reportWebVitals from "./reportWebVitals";
 import { loadDevTools } from "jira-dev-tool";
 import { AppProviders } from "context";
 
+// 要放置在jira-dev-tool后边引入
+import "antd/dist/antd.less";
+import "assets/css/index.css";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );

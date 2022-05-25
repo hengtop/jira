@@ -7,7 +7,6 @@ function App() {
   const { user } = useAuth();
   return (
     <div className="App">
-      hello jira~~~
       {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );

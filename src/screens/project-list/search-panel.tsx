@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 import { UserType } from "./index";
+import { Input, Select } from "antd";
 
 interface SearchPanelType {
   users: UserType[];
@@ -16,35 +17,33 @@ export default function SearchPanel({
   setParam,
 }: PropsWithChildren<SearchPanelType>) {
   return (
-    <form action="#">
-      <div>
-        <input
-          type="text"
-          value={param.name}
-          onChange={(e) =>
-            setParam({
-              ...param,
-              name: e.target.value,
-            })
-          }
-        ></input>
-        <select
-          value={param.personId}
-          onChange={(e) =>
-            setParam({
-              ...param,
-              personId: e.target.value,
-            })
-          }
-        >
-          <option value={""}>负责人</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-      </div>
-    </form>
+    <div>
+      <Input
+        type="text"
+        value={param.name}
+        onChange={(value) =>
+          setParam({
+            ...param,
+            name: value,
+          })
+        }
+      ></Input>
+      <Select
+        value={param.personId}
+        onChange={(value) =>
+          setParam({
+            ...param,
+            personId: value,
+          })
+        }
+      >
+        <Select.Option value={""}>负责人</Select.Option>
+        {users.map((user) => (
+          <Select.Option key={user.id} value={user.id}>
+            {user.name}
+          </Select.Option>
+        ))}
+      </Select>
+    </div>
   );
 }
