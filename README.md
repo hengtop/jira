@@ -1,5 +1,7 @@
 # 本项目是一个打造 jira 的练习项目
 
+项目资料：[链接](https://www.notion.so/React-491ad0643476437cafde50bee4dde6ed)
+
 ## 项目规范
 
 1. 添加 prettier 和 eslint
@@ -36,7 +38,9 @@ npx mrm lint-staged
 
    参照链接[commitlint](https://github.com/conventional-changelog/commitlint)
 
-## 项目规范
+## 项目开发策略
+
+全局的一些方法或者状态长是哟个 context 来进行使用，以往我是 redux 一把梭
 
 # 如何启动
 
