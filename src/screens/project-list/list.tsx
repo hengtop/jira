@@ -1,21 +1,20 @@
 import { UserType } from "./index";
-import { Table, TableColumnType } from "antd";
+import { Table, TableColumnType, TableProps } from "antd";
 import dayjs from "dayjs";
 
-interface ProjectType {
+export interface ProjectType {
   id: number;
   name: string;
-  personId: number;
+  personId: number | string;
   organization: string;
   created: number;
   pin: boolean;
 }
-interface ListPropsType {
+interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
-  list: ProjectType[];
 }
 
-export default function List({ users, list }: ListPropsType) {
+export default function List({ users, ...props }: ListPropsType) {
   const columns: TableColumnType<ProjectType>[] = [
     {
       title: "名称",
@@ -50,5 +49,5 @@ export default function List({ users, list }: ListPropsType) {
       },
     },
   ];
-  return <Table pagination={false} columns={columns} dataSource={list}></Table>;
+  return <Table pagination={false} columns={columns} {...props}></Table>;
 }

@@ -38,7 +38,7 @@ export const http = async (
       return res;
     } else {
       //fetch在状态为5xx或者4xx时并不会抛出异常，我们需要手动抛异常，这也是和axios不一样的地方
-      return Promise.reject();
+      return Promise.reject(res);
     }
   });
 };

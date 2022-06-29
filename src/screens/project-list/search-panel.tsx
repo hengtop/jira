@@ -22,10 +22,10 @@ export default function SearchPanel({
         <Input
           type="text"
           value={param.name}
-          onChange={(value) =>
+          onChange={(e) =>
             setParam({
               ...param,
-              name: value,
+              name: e.target.value,
             })
           }
         />
