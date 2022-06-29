@@ -5,6 +5,7 @@ import { useHttp } from "network";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
+import { Container } from "./style";
 
 export interface UserType {
   id: number;
@@ -40,9 +41,9 @@ export const Index = () => {
   );
 
   return (
-    <div>
+    <Container>
       <SearchPanel users={users} param={param} setParam={setParam} />
       <List users={users} list={list} />
-    </div>
+    </Container>
   );
 };

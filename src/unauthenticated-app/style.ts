@@ -39,8 +39,3 @@ export const Background = styled.div`
     calc(((100vw - 40rem) / 2) - 3.2rem), cover;
   background-image: url(${left}), url(${right});
 `;
-
-export const Title = styled.h2`
-  margin-bottom: 2.4rem;
-  color: rgb(94, 108, 132);
-`;
