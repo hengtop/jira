@@ -8,7 +8,7 @@ import {
   PageHeaderRight,
 } from "./style";
 import { ReactComponent as SoftwareLogo } from "assets/img/software-logo.svg";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Button } from "antd";
 
 export default function Index() {
   const { logout, user } = useAuth();
@@ -27,13 +27,17 @@ export default function Index() {
               <Menu>
                 <Menu.Item key={"logout"}>
                   {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a onClick={logout}>登出</a>
+                  <Button type="link" onClick={logout}>
+                    登出
+                  </Button>
                 </Menu.Item>
               </Menu>
             }
           >
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+            <Button type="link" onClick={(e) => e.preventDefault()}>
+              Hi, {user?.name}
+            </Button>
           </Dropdown>
         </PageHeaderRight>
       </PageHeader>

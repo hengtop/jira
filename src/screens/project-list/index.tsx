@@ -32,11 +32,13 @@ export const Index = () => {
       params: cleanObject(debounceParams),
     }).then(setList);
     // 这里注意不能将client添加到依赖数组中，否则会导致刷新
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParams]);
 
   useMount(
     useCallback(() => {
       client("/users").then(setUsers);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 

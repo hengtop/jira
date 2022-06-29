@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "context/auth";
-import { Form, Input, Divider } from "antd";
+import { Form, Input, Divider, Button } from "antd";
 import { LongButton, Title } from "./style";
 
 export const LoginScreen = () => {
@@ -41,9 +41,9 @@ export const LoginScreen = () => {
           {isRegister ? "注册" : "登录"}
         </LongButton>
         <Divider />
-        <a href="javascript:void(0)" onClick={() => setIsregister(!isRegister)}>
+        <Button type="link" onClick={() => setIsregister(!isRegister)}>
           {isRegister ? "已有账号了?点击登录" : "没有账号?立即注册"}
-        </a>
+        </Button>
       </Form>
     </>
   );

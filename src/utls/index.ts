@@ -1,4 +1,5 @@
-export const cleanObject = (object: object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
+  // 这里修改了传入参数的类型，保证传入的类型为函数导致解构出来为空对象
   const result = { ...object };
   const keys = Object.keys(object);
   if (keys.length === 0) return result;
