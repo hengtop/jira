@@ -2,7 +2,7 @@ import type { UserType } from "screens/project-list";
 
 import { useEffect } from "react";
 import { useAsync } from "./use-async";
-import { cleanObject } from "utls";
+import { cleanObject } from "utils";
 import { useHttp } from "network/http";
 
 export const useUsers = (params?: Partial<UserType>) => {
