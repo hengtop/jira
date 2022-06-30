@@ -20,7 +20,6 @@ export default class ErrorBoundary extends Component<
     const { error } = this.state;
     const { fallbackRender, children } = this.props;
     if (error) {
-      console.log(error);
       return fallbackRender({ error });
     }
     return children;

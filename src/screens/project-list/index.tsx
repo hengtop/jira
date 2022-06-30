@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { useMount, useDebounce, useProjects, useUsers } from "hooks";
-import { useHttp } from "network";
+import { useState } from "react";
+import { useDebounce, useProjects, useUsers, useDocumentTitle } from "hooks";
+import { Helmet } from "react-helmet";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
@@ -24,9 +24,13 @@ export const Index = () => {
   const debounceParams = useDebounce(param, 500);
   const { isLoading, error, data: list } = useProjects(debounceParams);
   const { data: users } = useUsers();
+  useDocumentTitle("项目列表", false);
 
   return (
     <Container>
+      {/* <Helmet>
+        <title>项目列表</title>
+      </Helmet> */}
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type="danger">{error?.message}</Typography.Text>

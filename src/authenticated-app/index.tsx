@@ -18,8 +18,8 @@ export default function Index() {
         <PageHeaderLeft gap>
           {/* 这里注意我们是使用的svg的形式引入的图片，这样我们就可以利用svg的样式修改图片的样式了 */}
           <SoftwareLogo width={"18rem"} color="#2684FF" />
-          <h3>项目</h3>
-          <h3>用户</h3>
+          <h2>项目</h2>
+          <h2>用户</h2>
         </PageHeaderLeft>
         <PageHeaderRight>
           <Dropdown

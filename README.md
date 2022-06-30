@@ -43,6 +43,7 @@ npx mrm lint-staged
 状态管理: 全局的一些方法或者状态尝试 context 来进行使用，以往我是 redux 一把梭
 样式: 使用 antd 和 emotion 进行搭配使用
 布局 grid 和 flex 总结
+修改一些头部信息比如标题，可以使用 react-helmet 或者自定义 hooks
 
 # 如何启动
 
@@ -51,3 +52,4 @@ npx mrm lint-staged
 # 优化
 
 优化页面刷新后总是先跳转到登录页面的情况
+优化请求的一些状态判断，比如开始请求，请求中，请求完毕，请求错误

@@ -19,4 +19,18 @@ export const useDebounce = <T>(value: T, delay: number) => {
   return debounceValue;
 };
 
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  // 记录旧的标题
+  const oldTitle = document.title;
+  useEffect(() => {
+    document.title = title;
+    return () => {
+      // 保证组件卸载后标题还原为原来的标题
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+  }, [title]);
+};
+
 export { useAsync, useProjects, useUsers };
