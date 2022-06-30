@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { useDebounce, useProjects, useUsers, useDocumentTitle } from "hooks";
+import {
+  useDebounce,
+  useProjects,
+  useUsers,
+  useDocumentTitle,
+  useUrlQueryParam,
+} from "hooks";
 import { Helmet } from "react-helmet";
 
 import SearchPanel from "./search-panel";
@@ -17,10 +23,8 @@ export interface UserType {
 }
 
 export const Index = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
+  const [param, setParam] = useUrlQueryParam(keys);
   const debounceParams = useDebounce(param, 500);
   const { isLoading, error, data: list } = useProjects(debounceParams);
   const { data: users } = useUsers();
@@ -39,3 +43,6 @@ export const Index = () => {
     </Container>
   );
 };
+
+//设置为true开启本组件重复渲染检查
+Index.whyDidYouRender = false;
