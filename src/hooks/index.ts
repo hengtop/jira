@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAsync } from "./use-async";
 import { useProjects } from "./use-projects";
 import { useUsers } from "./use-users";
@@ -21,7 +21,7 @@ export const useDebounce = <T>(value: T, delay: number) => {
 
 export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   // 记录旧的标题
-  const oldTitle = document.title;
+  const oldTitle = useRef(document.title).current;
   useEffect(() => {
     document.title = title;
     return () => {
@@ -30,7 +30,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
         document.title = oldTitle;
       }
     };
-  }, [title]);
+  }, [title, keepOnUnmount, oldTitle]);
 };
 
 export { useAsync, useProjects, useUsers };
