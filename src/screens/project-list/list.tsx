@@ -1,5 +1,6 @@
 import { UserType } from "./index";
 import { Table, TableColumnType, TableProps } from "antd";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 
 export interface ProjectType {
@@ -20,6 +21,9 @@ export default function List({ users, ...props }: ListPropsType) {
       title: "名称",
       dataIndex: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
+      render(value, project) {
+        return <Link to={String(project.id)}>{project.name}</Link>;
+      },
     },
     {
       title: "部门",
