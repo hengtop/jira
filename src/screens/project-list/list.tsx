@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 export interface ProjectType {
   id: number;
   name: string;
-  personId: number | string;
+  personId: number;
   organization: string;
   created: number;
   pin: boolean;

@@ -1,12 +1,6 @@
-import { useState } from "react";
-import {
-  useDebounce,
-  useProjects,
-  useUsers,
-  useDocumentTitle,
-  useUrlQueryParam,
-} from "hooks";
+import { useDebounce, useProjects, useUsers, useDocumentTitle } from "hooks";
 import { Helmet } from "react-helmet";
+import { useProjectSearchParams } from "./utils";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
@@ -23,10 +17,8 @@ export interface UserType {
 }
 
 export const Index = () => {
-  const [keys] = useState<("name" | "personId")[]>(["name", "personId"]);
-  const [param, setParam] = useUrlQueryParam(keys);
-  const debounceParams = useDebounce(param, 500);
-  const { isLoading, error, data: list } = useProjects(debounceParams);
+  const [param, setParam] = useProjectSearchParams();
+  const { isLoading, error, data: list } = useProjects(useDebounce(param, 500));
   const { data: users } = useUsers();
   useDocumentTitle("项目列表", false);
 
@@ -45,4 +37,4 @@ export const Index = () => {
 };
 
 //设置为true开启本组件重复渲染检查
-Index.whyDidYouRender = false;
+Index.whyDidYouRender = true;

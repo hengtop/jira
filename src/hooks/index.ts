@@ -42,13 +42,14 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
  */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [keysParams] = useState(keys);
   return [
     useMemo(
       () =>
-        keys.reduce((prev, cur) => {
+        keysParams.reduce((prev, cur) => {
           return { ...prev, [cur]: searchParams.get(cur) ?? "" };
         }, {} as { [key in K]: string }),
-      [searchParams, keys],
+      [searchParams, keysParams],
     ),
     (params: Partial<{ [key in K]: unknown }>) => {
       const o = cleanObject({

@@ -1,14 +1,14 @@
 import type { PropsWithChildren } from "react";
+import type { ProjectType } from "./list";
+
 import { UserType } from "./index";
 import { Input, Select, Form } from "antd";
+import UserSelect from "components/user-select";
 
 interface SearchPanelType {
   users: UserType[];
-  param: {
-    name: string;
-    personId: number | string;
-  };
-  setParam: (param: any) => void;
+  param: Partial<Pick<ProjectType, "name" | "personId">>;
+  setParam: (param: SearchPanelType["param"]) => void;
 }
 
 export default function SearchPanel({
@@ -31,7 +31,8 @@ export default function SearchPanel({
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
+          defaultOptionName="负责人"
           value={param.personId}
           onChange={(value) =>
             setParam({
@@ -39,14 +40,7 @@ export default function SearchPanel({
               personId: value,
             })
           }
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-          {users.map((user) => (
-            <Select.Option key={user.id} value={String(user.id)}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+        />
       </Form.Item>
     </Form>
   );
