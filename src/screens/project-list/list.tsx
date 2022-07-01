@@ -2,6 +2,9 @@ import { UserType } from "./index";
 import { Table, TableColumnType, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { useAddProject, useEditProject } from "hooks";
+
+import Star from "components/star";
 
 export interface ProjectType {
   id: number;
@@ -13,10 +16,27 @@ export interface ProjectType {
 }
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
+  refresh?: () => void;
 }
 
 export default function List({ users, ...props }: ListPropsType) {
+  const { mutate } = useEditProject();
+  // 柯里化
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props?.refresh);
   const columns: TableColumnType<ProjectType>[] = [
+    {
+      title: <Star checked={true} disabled={true} />,
+      render(value, project) {
+        return (
+          <Star
+            checked={project.pin}
+            disabled={true}
+            onCheckedChange={pinProject(project.id)}
+          />
+        );
+      },
+    },
     {
       title: "名称",
       dataIndex: "name",
@@ -53,5 +73,12 @@ export default function List({ users, ...props }: ListPropsType) {
       },
     },
   ];
-  return <Table pagination={false} columns={columns} {...props}></Table>;
+  return (
+    <Table
+      rowKey={"id"}
+      pagination={false}
+      columns={columns}
+      {...props}
+    ></Table>
+  );
 }

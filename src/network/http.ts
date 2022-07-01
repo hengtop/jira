@@ -25,8 +25,8 @@ export const http = async (
   if (config.params) {
     url += `?${qs.stringify(config.params)}`;
   }
-  if (config.body) {
-    config.body = JSON.stringify(config.body);
+  if (data) {
+    config.body = JSON.stringify(data);
   }
   return fetch(`${apiUrl}${url}`, config).then(async (response) => {
     if (response.status === 401) {

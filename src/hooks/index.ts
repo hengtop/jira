@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { cleanObject } from "utils";
 import { useAsync } from "./use-async";
-import { useProjects } from "./use-projects";
+import { useProjects, useEditProject, useAddProject } from "./use-projects";
 import { useUsers } from "./use-users";
 
 // 对于之灾组件挂载完后执行的逻辑进行封装
@@ -61,4 +61,4 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   ] as const; // 这里使用as const 保证类型时类元组的类型而不是联合类型数组
 };
 
-export { useAsync, useProjects, useUsers };
+export { useAsync, useProjects, useEditProject, useAddProject, useUsers };

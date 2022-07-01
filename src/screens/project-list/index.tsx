@@ -18,7 +18,12 @@ export interface UserType {
 
 export const Index = () => {
   const [param, setParam] = useProjectSearchParams();
-  const { isLoading, error, data: list } = useProjects(useDebounce(param, 500));
+  const {
+    isLoading,
+    error,
+    data: list,
+    retry,
+  } = useProjects(useDebounce(param, 500));
   const { data: users } = useUsers();
   useDocumentTitle("项目列表", false);
 
@@ -31,10 +36,15 @@ export const Index = () => {
       {error ? (
         <Typography.Text type="danger">{error?.message}</Typography.Text>
       ) : null}
-      <List users={users || []} dataSource={list || []} loading={isLoading} />
+      <List
+        refresh={retry}
+        users={users || []}
+        dataSource={list || []}
+        loading={isLoading}
+      />
     </Container>
   );
 };
 
 //设置为true开启本组件重复渲染检查
-Index.whyDidYouRender = true;
+Index.whyDidYouRender = false;

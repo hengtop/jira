@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface State<D> {
   error: Error | null;
@@ -26,6 +26,9 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+
+  const [retry, setRetry] = useState(() => () => {});
+
   const setData = (data: D) =>
     setState({
       data,
@@ -41,10 +44,20 @@ export const useAsync = <D>(
     });
 
   // 用于出发异步请求
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: {
+      retry: () => Promise<D>;
+    },
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("请传入promise数据");
     }
+    if (runConfig?.retry) {
+      // 保存promise
+      setRetry(() => () => run(runConfig.retry(), runConfig));
+    }
+
     setState({
       ...state,
       stat: "loading",
@@ -70,6 +83,7 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    retry,
     ...state,
   };
 };
