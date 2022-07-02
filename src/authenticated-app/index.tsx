@@ -22,14 +22,32 @@ export default function Index() {
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <HeaderBar setProjectModalOpen={setProjectModalOpen} />
+      <HeaderBar
+        projectButton={
+          <ButtonNoPadding
+            onClick={() => setProjectModalOpen(true)}
+            type="link"
+          >
+            创建项目
+          </ButtonNoPadding>
+        }
+      />
       <Main>
         <BrowserRouter>
           <Routes>
             <Route
               path={"/projects"}
               element={
-                <ProjectList setProjectModalOpen={setProjectModalOpen} />
+                <ProjectList
+                  projectButton={
+                    <ButtonNoPadding
+                      onClick={() => setProjectModalOpen(true)}
+                      type="link"
+                    >
+                      创建项目
+                    </ButtonNoPadding>
+                  }
+                />
               }
             />
             <Route
@@ -49,9 +67,7 @@ export default function Index() {
 }
 
 // 简单的提取操作
-export const HeaderBar = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+export const HeaderBar = (props: { projectButton: JSX.Element }) => {
   return (
     <PageHeader between>
       <PageHeaderLeft gap>
@@ -60,7 +76,7 @@ export const HeaderBar = (props: {
           <SoftwareLogo width={"18rem"} color="#2684FF" />
         </ButtonNoPadding>
 
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover {...props} />
         <span>用户</span>
       </PageHeaderLeft>
       <PageHeaderRight>

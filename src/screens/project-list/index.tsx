@@ -17,9 +17,7 @@ export interface UserType {
   token: string;
 }
 
-export const Index = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+export const Index = (props: { projectButton: JSX.Element }) => {
   const [param, setParam] = useProjectSearchParams();
   const {
     isLoading,
@@ -37,16 +35,14 @@ export const Index = (props: {
       </Helmet> */}
       <Row between={true}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
-          创建项目
-        </Button>
+        {props.projectButton}
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type="danger">{error?.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
+        projectButton={props.projectButton}
         refresh={retry}
         users={users || []}
         dataSource={list || []}

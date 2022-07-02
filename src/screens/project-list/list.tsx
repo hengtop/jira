@@ -18,7 +18,7 @@ export interface ProjectType {
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
   refresh?: () => void;
-  setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }
 
 export default function List({ users, ...props }: ListPropsType) {
@@ -83,14 +83,7 @@ export default function List({ users, ...props }: ListPropsType) {
                 items={[
                   {
                     key: "edit",
-                    label: (
-                      <ButtonNoPadding
-                        type="link"
-                        onClick={() => props.setProjectModalOpen(true)}
-                      >
-                        编辑
-                      </ButtonNoPadding>
-                    ),
+                    label: props.projectButton,
                   },
                 ]}
               ></Menu>

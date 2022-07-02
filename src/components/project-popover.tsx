@@ -2,11 +2,10 @@ import React, { memo } from "react";
 import { useProjects } from "hooks";
 
 import { Popover, Typography, List, Divider } from "antd";
-import { ButtonNoPadding } from "components/lib";
 import styled from "@emotion/styled";
 
 export default memo(function ProjectPopover(props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) {
   //props/state
   const { data: projects, isLoading } = useProjects();
@@ -23,12 +22,7 @@ export default memo(function ProjectPopover(props: {
         ))}
       </List>
       <Divider />
-      <ButtonNoPadding
-        onClick={() => props.setProjectModalOpen(true)}
-        type="link"
-      >
-        创建项目
-      </ButtonNoPadding>
+      {props.projectButton}
     </PopoverContainer>
   );
   //redux hooks
