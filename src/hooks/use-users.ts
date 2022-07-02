@@ -11,8 +11,7 @@ export const useUsers = (params?: Partial<UserType>) => {
 
   useEffect(() => {
     run(client("/users", { params: cleanObject(params || {}) }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [params, run, client]);
 
   return result;
 };

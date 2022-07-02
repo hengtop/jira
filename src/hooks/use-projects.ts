@@ -1,6 +1,6 @@
 import type { ProjectType } from "screens/project-list/list";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAsync } from "./use-async";
 import { cleanObject } from "utils";
 import { useHttp } from "network/http";
@@ -9,16 +9,18 @@ export const useProjects = (params?: Partial<ProjectType>) => {
   const client = useHttp();
   const { run, ...result } = useAsync<ProjectType[]>();
 
-  const fetchProjects = () =>
-    client("/projects", {
-      params: cleanObject(params || {}),
-    });
+  const fetchProjects = useCallback(
+    () =>
+      client("/projects", {
+        params: cleanObject(params || {}),
+      }),
+    [client, params],
+  );
   useEffect(() => {
     run(fetchProjects(), {
       retry: fetchProjects,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [params, run, fetchProjects]);
   return result;
 };
 

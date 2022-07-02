@@ -1,6 +1,7 @@
 import qs from "qs";
 import * as auth from "auth-provider";
 import { useAuth } from "context/auth";
+import { useCallback } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -51,6 +52,9 @@ export const useHttp = () => {
     还有一个注意事项就是ts中的typeof时在静态环境运行生效
     js中的typeof是在运行时运行生效
   */
-  return (...[url, config]: Parameters<typeof http>) =>
-    http(url, { ...config, token: user?.token });
+  return useCallback(
+    (...[url, config]: Parameters<typeof http>) =>
+      http(url, { ...config, token: user?.token }),
+    [user?.token],
+  );
 };

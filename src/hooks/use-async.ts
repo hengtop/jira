@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useMountedRef } from "./";
 
 interface State<D> {
@@ -31,54 +31,64 @@ export const useAsync = <D>(
   const [retry, setRetry] = useState(() => () => {});
   const mountedRef = useMountedRef();
 
-  const setData = (data: D) =>
-    setState({
-      data,
-      stat: "success",
-      error: null,
-    });
+  const setData = useCallback(
+    (data: D) =>
+      setState({
+        data,
+        stat: "success",
+        error: null,
+      }),
+    [],
+  );
 
-  const setError = (error: Error) =>
-    setState({
-      error,
-      stat: "error",
-      data: null,
-    });
+  const setError = useCallback(
+    (error: Error) =>
+      setState({
+        error,
+        stat: "error",
+        data: null,
+      }),
+    [],
+  );
 
   // 用于出发异步请求
-  const run = (
-    promise: Promise<D>,
-    runConfig?: {
-      retry: () => Promise<D>;
+  const run = useCallback(
+    (
+      promise: Promise<D>,
+      runConfig?: {
+        retry: () => Promise<D>;
+      },
+    ) => {
+      if (!promise || !promise.then) {
+        throw new Error("请传入promise数据");
+      }
+      if (runConfig?.retry) {
+        // 保存promise
+        setRetry(() => () => run(runConfig.retry(), runConfig));
+      }
+
+      // 在useCallback中使用到了state但是在依赖中又使用了state这里就可以使用回调函数的形式来避免出发无限循环
+      setState((prevState) => ({
+        ...prevState,
+        stat: "loading",
+      }));
+      return promise
+        .then((data) => {
+          if (mountedRef.current) {
+            setData(data);
+          }
+
+          return data;
+        })
+        .catch((error) => {
+          setError(error);
+          // 这里可以设置是否向外抛出异常使得run在使用的时候可以被trycatch捕获到异常
+          if (config.throwOnError) return Promise.reject(error);
+          return error;
+        });
     },
-  ) => {
-    if (!promise || !promise.then) {
-      throw new Error("请传入promise数据");
-    }
-    if (runConfig?.retry) {
-      // 保存promise
-      setRetry(() => () => run(runConfig.retry(), runConfig));
-    }
-
-    setState({
-      ...state,
-      stat: "loading",
-    });
-    return promise
-      .then((data) => {
-        if (mountedRef.current) {
-          setData(data);
-        }
-
-        return data;
-      })
-      .catch((error) => {
-        setError(error);
-        // 这里可以设置是否向外抛出异常使得run在使用的时候可以被trycatch捕获到异常
-        if (config.throwOnError) return Promise.reject(error);
-        return error;
-      });
-  };
+    [config.throwOnError, mountedRef, setData, setError],
+  );
 
   return {
     isIdle: state.stat === "idle",
