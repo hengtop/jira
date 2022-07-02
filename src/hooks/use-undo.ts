@@ -46,7 +46,7 @@ export const useUndo = <T>(initialPresent: T) => {
   const set = useCallback((newPresent: T) => {
     setState((currentState) => {
       const { past, present } = currentState;
-      if ((newPresent = present)) {
+      if (newPresent === present) {
         return currentState;
       }
       return {
