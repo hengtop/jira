@@ -1,10 +1,11 @@
 import { UserType } from "./index";
-import { Table, TableColumnType, TableProps } from "antd";
+import { Dropdown, Menu, Table, TableColumnType, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAddProject, useEditProject } from "hooks";
 
 import Star from "components/star";
+import { ButtonNoPadding } from "components/lib";
 
 export interface ProjectType {
   id: number;
@@ -17,6 +18,7 @@ export interface ProjectType {
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
   refresh?: () => void;
+  setProjectModalOpen: (isOpen: boolean) => void;
 }
 
 export default function List({ users, ...props }: ListPropsType) {
@@ -69,6 +71,33 @@ export default function List({ users, ...props }: ListPropsType) {
               ? dayjs(project.created).format("YYYY-MM-DD")
               : "无"}
           </span>
+        );
+      },
+    },
+    {
+      render(value, project) {
+        return (
+          <Dropdown
+            overlay={
+              <Menu
+                items={[
+                  {
+                    key: "edit",
+                    label: (
+                      <ButtonNoPadding
+                        type="link"
+                        onClick={() => props.setProjectModalOpen(true)}
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    ),
+                  },
+                ]}
+              ></Menu>
+            }
+          >
+            <ButtonNoPadding type="link">...</ButtonNoPadding>
+          </Dropdown>
         );
       },
     },

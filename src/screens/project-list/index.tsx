@@ -5,7 +5,8 @@ import { useProjectSearchParams } from "./utils";
 import SearchPanel from "./search-panel";
 import List from "./list";
 import { Container } from "./style";
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
+import { Row } from "components/lib";
 
 export interface UserType {
   id: number;
@@ -16,7 +17,9 @@ export interface UserType {
   token: string;
 }
 
-export const Index = () => {
+export const Index = (props: {
+  setProjectModalOpen: (isOpen: boolean) => void;
+}) => {
   const [param, setParam] = useProjectSearchParams();
   const {
     isLoading,
@@ -32,11 +35,18 @@ export const Index = () => {
       {/* <Helmet>
         <title>项目列表</title>
       </Helmet> */}
+      <Row between={true}>
+        <h1>项目列表</h1>
+        <Button onClick={() => props.setProjectModalOpen(true)}>
+          创建项目
+        </Button>
+      </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type="danger">{error?.message}</Typography.Text>
       ) : null}
       <List
+        setProjectModalOpen={props.setProjectModalOpen}
         refresh={retry}
         users={users || []}
         dataSource={list || []}
