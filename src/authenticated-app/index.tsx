@@ -51,14 +51,18 @@ export const HeaderBar = () => {
       <PageHeaderRight>
         <Dropdown
           overlay={
-            <Menu>
-              <Menu.Item key={"logout"}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <Button type="link" onClick={logout}>
-                  登出
-                </Button>
-              </Menu.Item>
-            </Menu>
+            <Menu
+              items={[
+                {
+                  label: (
+                    <Button type="link" onClick={logout}>
+                      登出
+                    </Button>
+                  ),
+                  key: "logout",
+                },
+              ]}
+            ></Menu>
           }
         >
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

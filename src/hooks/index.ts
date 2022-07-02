@@ -61,4 +61,19 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   ] as const; // 这里使用as const 保证类型时类元组的类型而不是联合类型数组
 };
 
+/**
+ * @description 判断当前组件是否挂载的hook
+ * @returns mountedRef
+ */
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+  return mountedRef;
+};
+
 export { useAsync, useProjects, useEditProject, useAddProject, useUsers };
