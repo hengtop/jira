@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAuth } from "context/auth";
 import { Index as ProjectList } from "screens/project-list";
 import ProjectScreen from "screens/project";
@@ -19,37 +18,13 @@ import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 export default function Index() {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
   return (
     <Container>
-      <HeaderBar
-        projectButton={
-          <ButtonNoPadding
-            onClick={() => setProjectModalOpen(true)}
-            type="link"
-          >
-            创建项目
-          </ButtonNoPadding>
-        }
-      />
+      <HeaderBar />
       <Main>
         <BrowserRouter>
           <Routes>
-            <Route
-              path={"/projects"}
-              element={
-                <ProjectList
-                  projectButton={
-                    <ButtonNoPadding
-                      onClick={() => setProjectModalOpen(true)}
-                      type="link"
-                    >
-                      创建项目
-                    </ButtonNoPadding>
-                  }
-                />
-              }
-            />
+            <Route path={"/projects"} element={<ProjectList />} />
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
@@ -58,16 +33,13 @@ export default function Index() {
           </Routes>
         </BrowserRouter>
       </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
+      <ProjectModal />
     </Container>
   );
 }
 
 // 简单的提取操作
-export const HeaderBar = (props: { projectButton: JSX.Element }) => {
+export const HeaderBar = () => {
   return (
     <PageHeader between>
       <PageHeaderLeft gap>
@@ -76,7 +48,7 @@ export const HeaderBar = (props: { projectButton: JSX.Element }) => {
           <SoftwareLogo width={"18rem"} color="#2684FF" />
         </ButtonNoPadding>
 
-        <ProjectPopover {...props} />
+        <ProjectPopover />
         <span>用户</span>
       </PageHeaderLeft>
       <PageHeaderRight>

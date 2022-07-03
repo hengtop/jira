@@ -1,11 +1,15 @@
 import React, { ReactNode } from "react";
 import { AuthProvider } from "context/auth";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Provider } from "react-redux";
+import { store } from "store";
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <AuthProvider children={children} />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={new QueryClient()}>
+        <AuthProvider children={children} />
+      </QueryClientProvider>
+    </Provider>
   );
 };

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
 interface State {
   projectModalOpen: boolean;
@@ -21,3 +22,8 @@ export const projectListSlice = createSlice({
     },
   },
 });
+
+export const projectListAction = projectListSlice.actions;
+
+export const selectProjectModalOpen = (state: RootState) =>
+  state.projectList.projectModalOpen;

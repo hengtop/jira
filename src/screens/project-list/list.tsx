@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { projectListAction } from "screens/project-list/store/project-list.slice";
 import { UserType } from "./index";
 import { Dropdown, Menu, Table, TableColumnType, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -18,11 +20,11 @@ export interface ProjectType {
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
   refresh?: () => void;
-  projectButton: JSX.Element;
 }
 
 export default function List({ users, ...props }: ListPropsType) {
   const { mutate } = useEditProject();
+  const dispatch = useDispatch();
   // 柯里化
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props?.refresh);
@@ -83,7 +85,16 @@ export default function List({ users, ...props }: ListPropsType) {
                 items={[
                   {
                     key: "edit",
-                    label: props.projectButton,
+                    label: (
+                      <ButtonNoPadding
+                        onClick={() =>
+                          dispatch(projectListAction.openProjectModal())
+                        }
+                        type="link"
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    ),
                   },
                 ]}
               ></Menu>

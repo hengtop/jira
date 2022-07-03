@@ -2,13 +2,15 @@ import React, { memo } from "react";
 import { useProjects } from "hooks";
 
 import { Popover, Typography, List, Divider } from "antd";
+import { ButtonNoPadding } from "components/lib";
 import styled from "@emotion/styled";
+import { useDispatch } from "react-redux";
+import { projectListAction } from "screens/project-list/store/project-list.slice";
 
-export default memo(function ProjectPopover(props: {
-  projectButton: JSX.Element;
-}) {
+export default memo(function ProjectPopover() {
   //props/state
   const { data: projects, isLoading } = useProjects();
+  const dispatch = useDispatch();
   //所有的已收藏项目
   const pinnedProjects = projects?.filter((project) => project.pin);
   const content = (
@@ -22,7 +24,12 @@ export default memo(function ProjectPopover(props: {
         ))}
       </List>
       <Divider />
-      {props.projectButton}
+      <ButtonNoPadding
+        onClick={() => dispatch(projectListAction.openProjectModal())}
+        type="link"
+      >
+        创建项目
+      </ButtonNoPadding>
     </PopoverContainer>
   );
   //redux hooks

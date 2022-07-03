@@ -1,11 +1,14 @@
 import { useDebounce, useProjects, useUsers, useDocumentTitle } from "hooks";
 import { Helmet } from "react-helmet";
 import { useProjectSearchParams } from "./utils";
+import { projectListAction } from "screens/project-list/store/project-list.slice";
+import { useDispatch } from "react-redux";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
 import { Container } from "./style";
-import { Typography, Button } from "antd";
+import { Typography } from "antd";
+import { ButtonNoPadding } from "components/lib";
 import { Row } from "components/lib";
 
 export interface UserType {
@@ -17,7 +20,7 @@ export interface UserType {
   token: string;
 }
 
-export const Index = (props: { projectButton: JSX.Element }) => {
+export const Index = () => {
   const [param, setParam] = useProjectSearchParams();
   const {
     isLoading,
@@ -27,6 +30,7 @@ export const Index = (props: { projectButton: JSX.Element }) => {
   } = useProjects(useDebounce(param, 500));
   const { data: users } = useUsers();
   useDocumentTitle("项目列表", false);
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -35,14 +39,18 @@ export const Index = (props: { projectButton: JSX.Element }) => {
       </Helmet> */}
       <Row between={true}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding
+          onClick={() => dispatch(projectListAction.openProjectModal())}
+          type="link"
+        >
+          创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type="danger">{error?.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={props.projectButton}
         refresh={retry}
         users={users || []}
         dataSource={list || []}
