@@ -4,6 +4,8 @@ import { Form, Input, Divider, Button, Typography } from "antd";
 import { LongButton, Title } from "./style";
 import { useAsync } from "hooks";
 
+import { ErrorBox } from "components/lib";
+
 export const LoginScreen = () => {
   const { login, register } = useAuth();
   // 这里也可以直接导出error进行使用，不过这个error只能在异步操作中使用，比如在ui中，当然也可以设置throwOnError为true再结合trycatch捕获error
@@ -33,11 +35,7 @@ export const LoginScreen = () => {
   return (
     <>
       <Title>{isRegister ? "注册" : "请登录"}</Title>
-      {error ? (
-        <Typography.Text type="danger">{error.message}</Typography.Text>
-      ) : (
-        ""
-      )}
+      {error ? <ErrorBox error={error} /> : null}
       <Form onFinish={handleSubmit}>
         <Form.Item
           name="username"

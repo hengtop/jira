@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import type { ProjectType } from "./list";
 
 import { UserType } from "./index";
-import { Input, Select, Form } from "antd";
+import { Input, Form } from "antd";
 import UserSelect from "components/user-select";
 
 interface SearchPanelType {

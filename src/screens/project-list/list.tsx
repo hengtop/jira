@@ -5,6 +5,7 @@ import { Dropdown, Menu, Table, TableColumnType, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAddProject, useEditProject } from "hooks";
+import { useProjectModal } from "screens/project-list/utils";
 
 import Star from "components/star";
 import { ButtonNoPadding } from "components/lib";
@@ -19,15 +20,15 @@ export interface ProjectType {
 }
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
-  refresh?: () => void;
+  //refresh?: () => void;
 }
 
 export default function List({ users, ...props }: ListPropsType) {
   const { mutate } = useEditProject();
   const dispatch = useDispatch();
+  const { open, startEdit } = useProjectModal();
   // 柯里化
-  const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props?.refresh);
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   const columns: TableColumnType<ProjectType>[] = [
     {
       title: <Star checked={true} disabled={true} />,
@@ -87,12 +88,21 @@ export default function List({ users, ...props }: ListPropsType) {
                     key: "edit",
                     label: (
                       <ButtonNoPadding
-                        onClick={() =>
-                          dispatch(projectListAction.openProjectModal())
-                        }
+                        onClick={() => {
+                          startEdit(project.id);
+                          dispatch(projectListAction.openProjectModal());
+                        }}
                         type="link"
                       >
                         编辑
+                      </ButtonNoPadding>
+                    ),
+                  },
+                  {
+                    key: "delete",
+                    label: (
+                      <ButtonNoPadding onClick={() => {}} type="link">
+                        删除
                       </ButtonNoPadding>
                     ),
                   },

@@ -20,9 +20,9 @@ import { BrowserRouter } from "react-router-dom";
 export default function Index() {
   return (
     <Container>
-      <HeaderBar />
-      <Main>
-        <BrowserRouter>
+      <BrowserRouter>
+        <HeaderBar />
+        <Main>
           <Routes>
             <Route path={"/projects"} element={<ProjectList />} />
             <Route
@@ -31,9 +31,9 @@ export default function Index() {
             />
             <Route path="*" element={<Navigate to="/projects" />} />
           </Routes>
-        </BrowserRouter>
-      </Main>
-      <ProjectModal />
+        </Main>
+        <ProjectModal />
+      </BrowserRouter>
     </Container>
   );
 }

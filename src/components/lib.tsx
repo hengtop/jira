@@ -40,10 +40,19 @@ export const FullPageLoading = () => (
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => (
   <Fullpage>
     <DevTools />
-    <Typography.Text type="danger">{error?.message}</Typography.Text>
+    <ErrorBox error={error} />
   </Fullpage>
 );
 
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
+
+// 类型首位 当存在message就认为value为Error类型
+const isError = (value: any): value is Error => value?.message;
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type="danger">{error?.message}</Typography.Text>;
+  }
+  return null;
+};

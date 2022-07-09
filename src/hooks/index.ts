@@ -1,6 +1,6 @@
 import type { URLSearchParamsInit } from "react-router-dom";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { cleanObject } from "utils";
 import { useAsync } from "./use-async";
@@ -41,8 +41,9 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
  * @description 返回页面url中指定键的参数值
  */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [keysParams] = useState(keys);
+  const setSearchParams = useSetUrlSearchParam();
   return [
     useMemo(
       () =>
@@ -51,14 +52,24 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
         }, {} as { [key in K]: string }),
       [searchParams, keysParams],
     ),
-    (params: Partial<{ [key in K]: unknown }>) => {
-      const o = cleanObject({
-        ...Object.fromEntries(searchParams),
-        ...params,
-      }) as URLSearchParamsInit;
-      return setSearchParams(o);
-    },
+    useCallback(
+      (params: Partial<{ [key in K]: unknown }>) => {
+        return setSearchParams(params);
+      },
+      [setSearchParams],
+    ),
   ] as const; // 这里使用as const 保证类型时类元组的类型而不是联合类型数组
+};
+
+export const useSetUrlSearchParam = () => {
+  const [searchParams, setSearchParam] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const o = cleanObject({
+      ...Object.fromEntries(searchParams),
+      ...params,
+    }) as URLSearchParamsInit;
+    return setSearchParam(o);
+  };
 };
 
 /**

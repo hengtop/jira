@@ -6,10 +6,13 @@ import { ButtonNoPadding } from "components/lib";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { projectListAction } from "screens/project-list/store/project-list.slice";
+import { useProjectModal } from "screens/project-list/utils";
 
 export default memo(function ProjectPopover() {
   //props/state
-  const { data: projects, isLoading } = useProjects();
+  const { data: projects } = useProjects();
+  const { open } = useProjectModal();
+
   const dispatch = useDispatch();
   //所有的已收藏项目
   const pinnedProjects = projects?.filter((project) => project.pin);
@@ -25,7 +28,10 @@ export default memo(function ProjectPopover() {
       </List>
       <Divider />
       <ButtonNoPadding
-        onClick={() => dispatch(projectListAction.openProjectModal())}
+        onClick={() => {
+          open();
+          dispatch(projectListAction.openProjectModal());
+        }}
         type="link"
       >
         创建项目
