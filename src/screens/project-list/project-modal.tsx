@@ -7,7 +7,10 @@ import {
 } from "screens/project-list/store/project-list.slice";
 import { Button, Drawer, Spin, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useProjectModal } from "screens/project-list/utils";
+import {
+  useProjectModal,
+  useProjectsQueryKey,
+} from "screens/project-list/utils";
 import UserSelect from "components/user-select";
 import { useAddProject, useEditProject } from "hooks";
 import { ErrorBox } from "components/lib";
@@ -27,7 +30,11 @@ export default memo(function ProjectModal() {
   const dispatch = useDispatch();
   const projectModalOpen = useSelector(selectProjectModalOpen);
   const useMutateProject = editingProject ? useEditProject : useAddProject;
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = useMutateProject(useProjectsQueryKey());
   const [form] = useForm();
   useEffect(() => {
     if (urlProjectModalOpen) {

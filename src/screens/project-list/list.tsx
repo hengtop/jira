@@ -1,14 +1,25 @@
 import { useDispatch } from "react-redux";
 import { projectListAction } from "screens/project-list/store/project-list.slice";
 import { UserType } from "./index";
-import { Dropdown, Menu, Table, TableColumnType, TableProps } from "antd";
+import {
+  Dropdown,
+  Menu,
+  Modal,
+  Table,
+  TableColumnType,
+  TableProps,
+} from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAddProject, useEditProject } from "hooks";
-import { useProjectModal } from "screens/project-list/utils";
+import {
+  useProjectModal,
+  useProjectsQueryKey,
+} from "screens/project-list/utils";
 
 import Star from "components/star";
 import { ButtonNoPadding } from "components/lib";
+import { useDeleteProject } from "hooks/use-projects";
 
 export interface ProjectType {
   id: number;
@@ -24,7 +35,19 @@ interface ListPropsType extends TableProps<ProjectType> {
 }
 
 export default function List({ users, ...props }: ListPropsType) {
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectsQueryKey());
+  const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey());
+  const confirmDeleteProject = (id: number) => {
+    Modal.confirm({
+      title: "确定删除这个项目吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk() {
+        deleteProject({ id });
+      },
+    });
+  };
   const dispatch = useDispatch();
   const { open, startEdit } = useProjectModal();
   // 柯里化
@@ -101,7 +124,10 @@ export default function List({ users, ...props }: ListPropsType) {
                   {
                     key: "delete",
                     label: (
-                      <ButtonNoPadding onClick={() => {}} type="link">
+                      <ButtonNoPadding
+                        onClick={() => confirmDeleteProject(project.id)}
+                        type="link"
+                      >
                         删除
                       </ButtonNoPadding>
                     ),

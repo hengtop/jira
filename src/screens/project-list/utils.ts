@@ -33,6 +33,12 @@ export const useProjectModal = () => {
     [setProjectCreate],
   );
   const close = useCallback(() => {
+    // 这里设置url的query的时候必须一次性设置错误示范
+    /* 
+    // 如果按照以下的方式进行设置会出现意想不到的错误
+      setEditingProjectId({ editingProjectId: undefined });
+      setProjectCreate({ projectCreate: undefined }),
+    */
     setUrlParams({ projectCreate: undefined, editingProjectId: undefined });
   }, [setUrlParams]);
 
@@ -51,4 +57,9 @@ export const useProjectModal = () => {
     startEdit,
     isLoading,
   };
+};
+
+export const useProjectsQueryKey = () => {
+  const [params] = useProjectSearchParams();
+  return ["projects", params];
 };
