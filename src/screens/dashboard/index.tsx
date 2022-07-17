@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import { useDashboardSearchParams, useProjectInUrl } from "./utils";
 import { DashboardColumn } from "./dashboard-column";
 import { SearchPanel } from "./search-panel";
+import { ScreenContainer } from "components/lib";
 
 export default memo(function Dashboard() {
   //props/state
@@ -17,7 +18,7 @@ export default memo(function Dashboard() {
   //其他逻辑
 
   return (
-    <div>
+    <ScreenContainer>
       <SearchPanel />
       {currentProject?.name}dashboard
       <ColumnContainer>
@@ -25,12 +26,15 @@ export default memo(function Dashboard() {
           return <DashboardColumn key={item.id} dashboard={item} />;
         })}
       </ColumnContainer>
-    </div>
+    </ScreenContainer>
   );
 });
 
 export const ColumnContainer = styled.div`
   display: flex;
-  overflow: hidden;
-  margin-right: 2rem;
+  overflow-x: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  flex: 1;
 `;

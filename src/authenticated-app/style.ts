@@ -18,5 +18,7 @@ export const PageHeaderLeft = styled(Row)``;
 export const PageHeaderRight = styled.div``;
 
 export const Main = styled.main`
+  display: flex;
   height: calc(100vh - 6rem);
+  overflow: hidden;
 `;

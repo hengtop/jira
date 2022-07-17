@@ -8,7 +8,7 @@ import { useProjectModal } from "screens/project-list/utils";
 
 import SearchPanel from "./search-panel";
 import List from "./list";
-import { Container } from "./style";
+import { ScreenContainer } from "components/lib";
 import { Typography } from "antd";
 import { ButtonNoPadding } from "components/lib";
 import { Row, ErrorBox } from "components/lib";
@@ -22,7 +22,7 @@ export const Index = () => {
   const { open } = useProjectModal();
 
   return (
-    <Container>
+    <ScreenContainer>
       {/* <Helmet>
         <title>项目列表</title>
       </Helmet> */}
@@ -41,7 +41,7 @@ export const Index = () => {
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? <ErrorBox error={error} /> : null}
       <List users={users || []} dataSource={list || []} loading={isLoading} />
-    </Container>
+    </ScreenContainer>
   );
 };
 
