@@ -5,6 +5,8 @@ import { useSearchParams } from "react-router-dom";
 import { cleanObject } from "utils";
 import { useAsync } from "./use-async";
 import { useProjects, useEditProject, useAddProject } from "./use-projects";
+import { useDashboards } from "./use-dashboard";
+import { useTasks } from "./use-task";
 import { useUsers } from "./use-users";
 
 // 对于之灾组件挂载完后执行的逻辑进行封装
@@ -87,4 +89,12 @@ export const useMountedRef = () => {
   return mountedRef;
 };
 
-export { useAsync, useProjects, useEditProject, useAddProject, useUsers };
+export {
+  useAsync,
+  useProjects,
+  useEditProject,
+  useAddProject,
+  useUsers,
+  useDashboards,
+  useTasks,
+};

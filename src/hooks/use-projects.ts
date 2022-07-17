@@ -1,4 +1,4 @@
-import type { ProjectType } from "screens/project-list/list";
+import type { ProjectType } from "types/project";
 
 import { useCallback, useEffect } from "react";
 import { useAsync } from "./use-async";

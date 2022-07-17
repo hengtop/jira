@@ -1,4 +1,4 @@
-import type { UserType } from "screens/project-list";
+import type { UserType } from "types/user";
 
 import { useEffect } from "react";
 import { useAsync } from "./use-async";

@@ -1,6 +1,6 @@
 // 如果使用第三方的额认真，该文件就不用写了
 
-import { UserType } from "screens/project-list/index";
+import type { UserType } from "types/user";
 
 const localStoregeKey = "__auth_provider_token__";
 const apiUrl = process.env.REACT_APP_API_URL;

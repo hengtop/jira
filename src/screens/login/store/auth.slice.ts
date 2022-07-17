@@ -1,4 +1,4 @@
-import type { UserType } from "screens/project-list";
+import type { UserType } from "types/user";
 import type { AuthForm } from "context/auth";
 import type { AppDispatch, RootState } from "store";
 

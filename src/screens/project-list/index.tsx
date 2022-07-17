@@ -1,3 +1,4 @@
+import type { UserType } from "types/user";
 import { useDebounce, useProjects, useUsers, useDocumentTitle } from "hooks";
 import { Helmet } from "react-helmet";
 import { useProjectSearchParams } from "./utils";
@@ -11,15 +12,6 @@ import { Container } from "./style";
 import { Typography } from "antd";
 import { ButtonNoPadding } from "components/lib";
 import { Row, ErrorBox } from "components/lib";
-
-export interface UserType {
-  id: number;
-  name: string;
-  email: string;
-  title: string;
-  organization: string;
-  token: string;
-}
 
 export const Index = () => {
   const [param, setParam] = useProjectSearchParams();

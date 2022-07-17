@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router";
-import Dashbord from "screens/dashbord";
+import Dashbaord from "screens/dashboard";
 import Epic from "screens/epic";
 
 export default memo(function ProjectScreen() {
@@ -16,12 +16,12 @@ export default memo(function ProjectScreen() {
   return (
     <div>
       <h1>我是project</h1>
-      <Link to={"dashbord"}>看板</Link>
+      <Link to={"dashboard"}>看板</Link>
       <Link to={"epic"}>任务</Link>
       <Routes>
-        <Route path={"/dashbord"} element={<Dashbord />}></Route>
+        <Route index element={<Navigate to={"dashboard"} replace />} />
+        <Route path={"/dashbaord"} element={<Dashbaord />}></Route>
         <Route path={"/epic"} element={<Epic />}></Route>
-        <Route path="*" element={<Navigate to={"dashbord"} replace />} />
       </Routes>
     </div>
   );

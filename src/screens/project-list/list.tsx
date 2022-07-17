@@ -1,6 +1,7 @@
+import type { ProjectType } from "types/project";
+import type { UserType } from "types/user";
 import { useDispatch } from "react-redux";
 import { projectListAction } from "screens/project-list/store/project-list.slice";
-import { UserType } from "./index";
 import {
   Dropdown,
   Menu,
@@ -21,14 +22,6 @@ import Star from "components/star";
 import { ButtonNoPadding } from "components/lib";
 import { useDeleteProject } from "hooks/use-projects";
 
-export interface ProjectType {
-  id: number;
-  name: string;
-  personId: number;
-  organization: string;
-  created: number;
-  pin: boolean;
-}
 interface ListPropsType extends TableProps<ProjectType> {
   users: UserType[];
   //refresh?: () => void;

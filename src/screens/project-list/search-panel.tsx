@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
-import type { ProjectType } from "./list";
+import type { ProjectType } from "types/project";
+import type { UserType } from "types/user";
 
-import { UserType } from "./index";
 import { Input, Form } from "antd";
 import UserSelect from "components/user-select";
 

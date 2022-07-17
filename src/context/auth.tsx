@@ -1,8 +1,8 @@
 import type { AppDispatch } from "store";
+import type { UserType } from "types/user";
 
 import React, { ReactNode, useCallback } from "react";
 import * as auth from "auth-provider";
-import { UserType } from "screens/project-list";
 import { http } from "network";
 import { useMount, useAsync } from "hooks";
 import { FullPageLoading, FullPageErrorFallback } from "components/lib";
