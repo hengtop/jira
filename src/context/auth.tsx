@@ -8,6 +8,7 @@ import { useMount, useAsync } from "hooks";
 import { FullPageLoading, FullPageErrorFallback } from "components/lib";
 import * as authStore from "screens/login/store/auth.slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useQueryClient } from "react-query";
 
 export interface AuthForm {
   username: string;
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAuth = () => {
+  const queryClient = useQueryClient();
   const dispatch: (...args: unknown[]) => Promise<UserType> =
     useDispatch<AppDispatch>();
   const user = useSelector(authStore.selectUser);
@@ -73,7 +75,10 @@ export const useAuth = () => {
     (form: AuthForm) => dispatch(authStore.register(form)),
     [dispatch],
   );
-  const logout = useCallback(() => dispatch(authStore.logout()), [dispatch]);
+  const logout = useCallback(() => {
+    queryClient.clear();
+    dispatch(authStore.logout());
+  }, [dispatch, queryClient]);
   return {
     user,
     login,
