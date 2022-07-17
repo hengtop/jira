@@ -10,7 +10,7 @@ export interface TaskType {
    * @description 任务组
    */
   epicId: number;
-  dashboardId: number;
+  kanbanId: number;
   /**
    * @description bug or task
    */
