@@ -21,7 +21,7 @@ export default memo(function ProjectScreen() {
       <Routes>
         <Route path={"/dashbord"} element={<Dashbord />}></Route>
         <Route path={"/epic"} element={<Epic />}></Route>
-        <Route path="*" element={<Navigate to={"dashbord"} />} />
+        <Route path="*" element={<Navigate to={"dashbord"} replace />} />
       </Routes>
     </div>
   );
