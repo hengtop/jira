@@ -1,4 +1,4 @@
-import { useUrlQueryParam } from "hooks";
+import { useDebounce, useUrlQueryParam } from "hooks";
 import { useProject } from "hooks/use-projects";
 import { useMemo } from "react";
 import { useLocation } from "react-router";
@@ -23,15 +23,16 @@ export const useDashboardQueryKey = () => [
 export const useTaskSearchParams = () => {
   const [param] = useUrlQueryParam(["name", "typeId", "processorId", "tagId"]);
   const projectId = useProjectIdInUrl();
+  const debounceName = useDebounce(param.name, 200);
   return useMemo(
     () => ({
       projectId,
       typeId: Number(param.typeId) || undefined,
       processorId: Number(param.processorId) || undefined,
       tagId: Number(param.tagId) || undefined,
-      name: param.name,
+      name: debounceName,
     }),
-    [projectId, param],
+    [projectId, param, debounceName],
   );
 };
 

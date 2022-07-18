@@ -5,3 +5,50 @@ html {
 html body #root .App {
   min-height: 100vh;
 }
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  /* 滚动条整体部分 */
+  margin-right: -8px;
+  width: 8px;
+  padding: 3px;
+  box-sizing: border-box;
+  border-color: transparent;
+}
+::-webkit-scrollbar-button {
+  /* 滚动条两端的按钮 */
+  display: none;
+}
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+  margin-bottom: 2px;
+}
+::-webkit-scrollbar-track {
+  /* 外层轨道 */
+  border-radius: 10px;
+  border-color: transparent;
+  width: 20px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-track-piece {
+  /*内层轨道，滚动条中间部分 */
+  border-radius: 10px;
+  border-color: #333;
+}
+::-webkit-scrollbar-thumb {
+  /* 滑块 */
+  width: 10px;
+  border-radius: 5px;
+  background: #cbcbcb;
+  border-color: transparent;
+}
+::-webkit-scrollbar-corner {
+  /* 边角 */
+  width: 10px;
+  border-color: transparent;
+}
+::-webkit-scrollbar-thumb:hover {
+  /* 鼠标移入滑块 */
+  background: #909090;
+  border-color: transparent;
+}

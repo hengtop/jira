@@ -63,3 +63,5 @@ npx mrm lint-staged
 简单跨组件：状态提升（祖先组件统一分发）/或者组合组件（直接转递一个封装好的组件）
 一些请求数据缓存：react-query/swr
 客户端状态 url/redux/context
+
+注意乐观更新数组数据会导致乐观新增的数据没有 key 而导致控制台报错（结局方法是判断该数据是否由 id 没有就用 index 来作为 key）===> key={item.id ?? index}

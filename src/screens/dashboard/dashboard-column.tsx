@@ -1,12 +1,17 @@
 import type { DashboardType } from "types/dashboard";
+import type { TaskType } from "types/task";
 import { useTasks } from "hooks";
-import { useTaskSearchParams } from "./utils";
-import { useTaskTypes } from "hooks/use-task";
+import { useDashboardQueryKey, useTaskSearchParams } from "./utils";
+import { useTasksModal, useTaskTypes } from "hooks/use-task";
 
 import taskIcon from "assets/img/task.svg";
 import bugIcon from "assets/img/bug.svg";
 import styled from "@emotion/styled";
-import { Card } from "antd";
+import { Button, Card, Dropdown, Menu, Modal } from "antd";
+import { Mark } from "components/mark";
+import CreateTask from "./create-task";
+import { useDeleteDashboard } from "hooks/use-dashboard";
+import { Row } from "components/lib";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -27,20 +32,21 @@ export const DashboardColumn = ({
   const tasks = allTasks?.filter((task) => task.kanbanId === dashboard.id);
   return (
     <Container>
-      {dashboard.name}
+      <Row between>
+        <TaskTitle>{dashboard.name}</TaskTitle>
+        <More dashboard={dashboard} />
+      </Row>
       <TasksContainer>
         {tasks?.map((task) => (
-          <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
-            <TaskTypeIcon id={task.typeId} />
-            <div>{task.name}</div>
-          </Card>
+          <TaskCard key={task.id} task={task} />
         ))}
+        <CreateTask dashboardId={dashboard.id} />
       </TasksContainer>
     </Container>
   );
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   min-width: 27rem;
   border-radius: 6px;
   background-color: #f4f5f7;
@@ -57,3 +63,61 @@ const TasksContainer = styled.div`
     display: none;
   }
 `;
+
+const TaskTitle = styled.h2`
+  font-size: 1.75rem;
+  font-weight: 500;
+  padding: 3px 5px;
+`;
+
+const TaskCard = ({ task }: { task: TaskType }) => {
+  const { startEdit } = useTasksModal();
+  const { name: keyword } = useTaskSearchParams();
+  return (
+    <Card
+      onClick={() => startEdit(task.id)}
+      style={{ marginBottom: "0.5rem" }}
+      key={task.id}
+    >
+      <p>
+        <Mark name={task.name} keyword={keyword} />
+      </p>
+      <TaskTypeIcon id={task.typeId} />
+    </Card>
+  );
+};
+
+const More = ({ dashboard }: { dashboard: DashboardType }) => {
+  const { mutateAsync: deleteDashboard } = useDeleteDashboard(
+    useDashboardQueryKey(),
+  );
+  const confirmDeleteDashboard = () => {
+    Modal.confirm({
+      okText: "确定",
+      cancelText: "取消",
+      title: "确定删除看板吗",
+      onOk() {
+        deleteDashboard({ id: dashboard.id });
+      },
+    });
+  };
+  const overlay = (
+    <Menu
+      items={[
+        {
+          key: "remove",
+          label: (
+            <Button type="link" onClick={confirmDeleteDashboard}>
+              删除
+            </Button>
+          ),
+        },
+      ]}
+    ></Menu>
+  );
+  return (
+    <Dropdown overlay={overlay}>
+      <Button type="link">...</Button>
+    </Dropdown>
+  );
+};
