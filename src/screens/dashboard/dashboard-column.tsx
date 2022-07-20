@@ -12,6 +12,7 @@ import { Mark } from "components/mark";
 import CreateTask from "./create-task";
 import { useDeleteDashboard } from "hooks/use-dashboard";
 import { Row } from "components/lib";
+import { forwardRef } from "react";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -22,16 +23,15 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
   return <img src={name === "task" ? taskIcon : bugIcon} alt="" />;
 };
 
-export const DashboardColumn = ({
-  dashboard,
-}: {
-  dashboard: DashboardType;
-}) => {
+export const DashboardColumn = forwardRef<
+  HTMLDivElement,
+  { dashboard: DashboardType }
+>(({ dashboard, ...props }, ref) => {
   /* 这里表面上在每一个column中都会发送请求获取一次数据，react-query默认帮我们优化了请求，两秒内相同的请求发出，后面的请求并不会发出而直接使用第一次请求的cache */
   const { data: allTasks } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === dashboard.id);
   return (
-    <Container>
+    <Container ref={ref} {...props}>
       <Row between>
         <TaskTitle>{dashboard.name}</TaskTitle>
         <More dashboard={dashboard} />
@@ -44,7 +44,7 @@ export const DashboardColumn = ({
       </TasksContainer>
     </Container>
   );
-};
+});
 
 export const Container = styled.div`
   min-width: 27rem;
