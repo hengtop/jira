@@ -9,7 +9,7 @@ import { useDashboards } from "./use-dashboard";
 import { useTasks, useTaskTypes } from "./use-task";
 import { useUsers } from "./use-users";
 
-// 对于之灾组件挂载完后执行的逻辑进行封装
+// 对于组件挂载完后执行的逻辑进行封装
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();

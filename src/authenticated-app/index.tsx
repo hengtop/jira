@@ -16,6 +16,7 @@ import { resetRouter } from "utils";
 import { Dropdown, Menu, Button } from "antd";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import UserPopover from "components/user-popover";
 
 export default function Index() {
   return (
@@ -49,7 +50,7 @@ export const HeaderBar = () => {
         </ButtonNoPadding>
 
         <ProjectPopover />
-        <span>用户</span>
+        <UserPopover />
       </PageHeaderLeft>
       <PageHeaderRight>
         <User />

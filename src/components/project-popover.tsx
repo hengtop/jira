@@ -10,7 +10,7 @@ import { useProjectModal } from "screens/project-list/utils";
 
 export default memo(function ProjectPopover() {
   //props/state
-  const { data: projects } = useProjects();
+  const { data: projects, refetch } = useProjects();
   const { open } = useProjectModal();
 
   const dispatch = useDispatch();
@@ -45,7 +45,11 @@ export default memo(function ProjectPopover() {
   //其他逻辑
 
   return (
-    <Popover placement={"bottom"} content={content}>
+    <Popover
+      onVisibleChange={() => refetch()}
+      placement={"bottom"}
+      content={content}
+    >
       项目
     </Popover>
   );
