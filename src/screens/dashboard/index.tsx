@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import React, { memo } from "react";
 import {
   useDashboardSearchParams,
+  useDragEnd,
   useProjectInUrl,
   useTaskSearchParams,
 } from "./utils";
@@ -30,15 +31,16 @@ export default memo(function Dashboard() {
   const { isLoading: taskIsLoading } = useTasks(useTaskSearchParams());
   //其他逻辑
   const isLoading = taskIsLoading || dashboardLoading;
+  const onDragEnd = useDragEnd();
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <ScreenContainer>
         <SearchPanel />
         <DashboardTitle>{currentProject?.name}看板</DashboardTitle>
         {isLoading ? (
           <Spin size="large" />
         ) : (
-          <Drop type="{column}" direction="horizontal" droppableId="dashboard">
+          <Drop type="COLUMN" direction="horizontal" droppableId="dashboard">
             <ColumnContainer
               data-rbd-droppable-context-id="dashboard"
               data-rbd-droppable-id="dashboard"

@@ -1,5 +1,5 @@
 import type { TaskTypeType } from "types/task-type";
-import type { TaskType } from "types/task";
+import type { SortPropsTask, TaskType } from "types/task";
 import type { QueryKey } from "react-query";
 import { useMutation, useQuery } from "react-query";
 
@@ -9,6 +9,7 @@ import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
+  useReorderTaskConfig,
 } from "./use-optimistic-options";
 import { useUrlQueryParam } from "hooks";
 import { useCallback } from "react";
@@ -94,4 +95,14 @@ export const useTask = (id?: number) => {
   return useQuery<TaskType>(["task", { id }], () => client(`/tasks/${id}`), {
     enabled: Boolean(id),
   });
+};
+
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation((params: SortPropsTask) => {
+    return client("/tasks/reorder", {
+      data: params,
+      method: "POST",
+    });
+  }, useReorderTaskConfig(queryKey));
 };

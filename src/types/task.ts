@@ -1,3 +1,4 @@
+import type { SortProps } from "./dashboard";
 export interface TaskType {
   id: number;
   name: string;
@@ -16,4 +17,9 @@ export interface TaskType {
    */
   typeId: number;
   note: string;
+}
+
+export interface SortPropsTask extends SortProps {
+  fromKanbanId?: number;
+  toKanbanId?: number;
 }

@@ -1,10 +1,14 @@
-import type { DashboardType } from "types/dashboard";
+import type { DashboardType, SortProps } from "types/dashboard";
 import type { QueryKey } from "react-query";
 import { useQuery, useMutation } from "react-query";
 
 import { cleanObject } from "utils";
 import { useHttp } from "network/http";
-import { useAddConfig, useDeleteConfig } from "./use-optimistic-options";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useReorderDashboardConfig,
+} from "./use-optimistic-options";
 
 export const useDashboards = (params?: Partial<DashboardType>) => {
   const client = useHttp();
@@ -35,4 +39,14 @@ export const useDeleteDashboard = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey),
   );
+};
+
+export const useReorderDashboard = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation((params: SortProps) => {
+    return client("/kanbans/reorder", {
+      data: params,
+      method: "POST",
+    });
+  }, useReorderDashboardConfig(queryKey));
 };

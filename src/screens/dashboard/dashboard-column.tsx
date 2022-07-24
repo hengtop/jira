@@ -1,5 +1,7 @@
 import type { DashboardType } from "types/dashboard";
 import type { TaskType } from "types/task";
+
+import { forwardRef } from "react";
 import { useTasks } from "hooks";
 import { useDashboardQueryKey, useTaskSearchParams } from "./utils";
 import { useTasksModal, useTaskTypes } from "hooks/use-task";
@@ -12,7 +14,7 @@ import { Mark } from "components/mark";
 import CreateTask from "./create-task";
 import { useDeleteDashboard } from "hooks/use-dashboard";
 import { Row } from "components/lib";
-import { forwardRef } from "react";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -37,9 +39,28 @@ export const DashboardColumn = forwardRef<
         <More dashboard={dashboard} />
       </Row>
       <TasksContainer>
-        {tasks?.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
+        <Drop
+          type="ROW"
+          direction="vertical"
+          droppableId={String(dashboard.id)}
+        >
+          <DropChild
+            data-rbd-droppable-context-id="task"
+            data-rbd-droppable-id="task"
+            style={{ minHeight: "5px" }}
+          >
+            {tasks?.map((task, taskIndex) => (
+              <Drag
+                key={task.id}
+                index={taskIndex}
+                draggableId={"task" + task.id}
+              >
+                <TaskCard key={task.id} task={task} />
+              </Drag>
+            ))}
+          </DropChild>
+        </Drop>
+
         <CreateTask dashboardId={dashboard.id} />
       </TasksContainer>
     </Container>
@@ -70,22 +91,26 @@ const TaskTitle = styled.h2`
   padding: 3px 5px;
 `;
 
-const TaskCard = ({ task }: { task: TaskType }) => {
-  const { startEdit } = useTasksModal();
-  const { name: keyword } = useTaskSearchParams();
-  return (
-    <Card
-      onClick={() => startEdit(task.id)}
-      style={{ marginBottom: "0.5rem" }}
-      key={task.id}
-    >
-      <p>
-        <Mark name={task.name} keyword={keyword} />
-      </p>
-      <TaskTypeIcon id={task.typeId} />
-    </Card>
-  );
-};
+export const TaskCard = forwardRef<HTMLDivElement, { task: TaskType }>(
+  ({ task, ...props }, ref) => {
+    const { startEdit } = useTasksModal();
+    const { name: keyword } = useTaskSearchParams();
+    return (
+      <div ref={ref} {...props}>
+        <Card
+          onClick={() => startEdit(task.id)}
+          style={{ marginBottom: "0.5rem" }}
+          key={task.id}
+        >
+          <p>
+            <Mark name={task.name} keyword={keyword} />
+          </p>
+          <TaskTypeIcon id={task.typeId} />
+        </Card>
+      </div>
+    );
+  },
+);
 
 const More = ({ dashboard }: { dashboard: DashboardType }) => {
   const { mutateAsync: deleteDashboard } = useDeleteDashboard(
