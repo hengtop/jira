@@ -1,7 +1,6 @@
 // 搜索高亮组件
 
 export const Mark = ({ name, keyword }: { name: string; keyword: string }) => {
-  console.log(keyword);
   if (!keyword) {
     return <>{name}</>;
   } else {
